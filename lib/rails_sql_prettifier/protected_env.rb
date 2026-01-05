@@ -6,8 +6,12 @@ module RailsSQLPrettifier
       migration_context = ActiveRecord::Base.connection.try(:migration_context) ||
         ActiveRecord::Base.connection.try(:pool)&.migration_context # rails 7.2+
 
-      migration_context&.protected_environment? ||
-        defined?(Rails) && !(Rails.env.test? || Rails.env.development?)
+      begin
+        migration_context&.protected_environment? ||
+          defined?(Rails) && !(Rails.env.test? || Rails.env.development?)
+      rescue ActiveRecord::NoDatabaseError
+        false
+      end
     end
   end
 end
