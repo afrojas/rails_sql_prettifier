@@ -8,7 +8,6 @@ module RailsSQLPrettifier
 
       (ActiveRecord::Base.connection.database_exists? && migration_context&.protected_environment?) ||
         defined?(Rails) && ActiveRecord::Base.protected_environments.include?(Rails.env)
-      end
     end
   end
 end
